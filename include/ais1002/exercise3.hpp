@@ -9,6 +9,7 @@
 #include <optional>
 #include <string>
 #include <thread>
+#include <memory>
 
 // TODO: The code located in this file might use more memory than intended. Basically, there is a bug hidden here.
 //  A solution will only need to change the logic in a single function.
@@ -47,6 +48,9 @@ namespace ais1002 {
         // put a new entry in the cache
         void put(const std::string &url, const std::shared_ptr<std::string> &content) {
             queue_.emplace_back(url, content);
+            if (queue_.size() > maxSize_) {
+                queue_.pop_front();
+            }
         }
 
     private:

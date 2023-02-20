@@ -16,14 +16,11 @@ namespace ais1002 {
             : sharedStr_(std::move(sharedStr)) {}
 
         [[nodiscard]] std::string str() const {
-            // TODO: return the value held by `sharedStr_`
-            // Hint: dereference operator
-            return {}; //placeholder
+            return *sharedStr_;
         }
 
         void update(const std::string &str) {
-           // TODO: update the value held by `sharedStr_`
-           // Hint: https://stackoverflow.com/questions/51093546/dereferencing-a-shared-pointer-and-assigning-to-it
+           *sharedStr_ = str;
         }
 
     private:
@@ -32,12 +29,9 @@ namespace ais1002 {
 
     // The use of std::pair as return type is arbitrary. Any compound object would do.
     std::pair<SharedString, SharedString> shareMe(std::unique_ptr<std::string>& ptr) {
-        // TODO: `ptr` represents unique ownership of an std::string. Your goal is to share that ownership between two instances of `SharedString` defined above.
-        // Hint: std::move can be used to transfer ownership from a unique_ptr. Copying is not possible.
-        // Hint: Calling std::move on a variable that has already been moved makes no sense.
-        // Hint: Copying shared_ptr is allowed.
+        std::shared_ptr<std::string> str = std::move(ptr);
 
-        throw std::runtime_error("Function 'shareMe' has not been implemented yet!"); // placeholder
+        return {SharedString(str), SharedString(str)};
     }
 
 }// namespace ais1002
